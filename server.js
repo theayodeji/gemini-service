@@ -14,18 +14,28 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 app.post("/format", async (req, res) => {
   try {
     const { transcript } = req.body;
-    if (!transcript) return res.status(400).json({ error: "No transcript provided" });
+    if (!transcript)
+      return res.status(400).json({ error: "No transcript provided" });
 
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const prompt = `
-      Clean up the following transcript:
-      - Remove filler words
-      - Fix grammar
-      - Split into clear paragraphs
+      You are an expert editor and fact-checker. You will be given raw text that is the output of an automated audio transcription, which may contain spelling mistakes, grammatical errors, poor formatting, missing punctuation, and occasionally incorrect information or words.
+Your task is to:
 
-      Transcript:
-      ${transcript}
+Correct all transcription errors while keeping the meaning accurate.
+
+Remove filler words and irrelevant content.
+
+Verify facts where possible and replace incorrect terms with the correct ones.
+
+Format the text into clear, well-structured notes using headings, bullet points, and paragraphs where appropriate.
+
+Use consistent capitalization, punctuation, and spelling.
+
+Maintain the tone as informative and academic, suitable for study purposes.
+Return only the cleaned and formatted text without extra explanations. 
+This is the text: ${transcript}
     `;
 
     const result = await model.generateContent(prompt);
