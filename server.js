@@ -39,6 +39,7 @@ Use consistent capitalization, punctuation, and spelling.
 
 Maintain the tone as informative and academic, suitable for study purposes.
 Return only the cleaned and formatted text without extra explanations. 
+If it doesn't make enough sense to fact-check, return the original text. I only want formatted text or original text, do not return anything else
 This is the text: ${transcript}
     `;
 
