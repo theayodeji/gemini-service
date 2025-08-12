@@ -1,10 +1,14 @@
 import express from "express";
 import dotenv from "dotenv";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import cors from "cors";
 
 dotenv.config();
 
 const app = express();
+app.use(cors({
+    origin: "*"
+}));
 app.use(express.json());
 
 // Initialize Gemini
